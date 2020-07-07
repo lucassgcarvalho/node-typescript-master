@@ -15,24 +15,24 @@ export default class UserController implements GenericHttpCallVerbs<GenericModel
         express.use(this.root, this.router);
     }
 
-    get (req: Request, res: Response, next: NextFunction) {
+    async get (req: Request, res: Response, next: NextFunction) {
         this.userService.get(req.query['id']).then( (user) => res.send(user));
     }
 
-    getAll(req: Request, res: Response, next: NextFunction): void{
+    async getAll(req: Request, res: Response, next: NextFunction) {
         throw new Error("Method not implemented.");
     }
 
-    post(req: Request, res: Response, next: NextFunction): void{
-       res.send(this.userService.post(req.body));
+    async post(req: Request, res: Response, next: NextFunction) {
+       res.send(await this.userService.post(req.body));
     }
 
-    put(req: Request, res: Response, next: NextFunction): void{
-        res.send(this.userService.put(req.query['id'], req.body));
+    async put(req: Request, res: Response, next: NextFunction) {
+        res.send(await this.userService.put(req.query['id'], req.body));
     }
 
-    delete(req: Request, res: Response, next: NextFunction): void{
-        res.send(this.userService.delete(req.query['id']));
+    async delete(req: Request, res: Response, next: NextFunction) {
+        res.send(await this.userService.delete(req.query['id']));
     }
 
     init() {
