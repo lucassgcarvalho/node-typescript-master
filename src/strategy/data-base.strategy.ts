@@ -13,8 +13,8 @@ export default class DataBaseStrategy<T> implements GenericCallVerbs<T>{
         }
     }
     
-    async get(options?: any) {
-        return this.dbStrategy.get(options);
+    async get(id: any) {
+        return this.dbStrategy.get(id);
     }
 
     async getAll(options?: any) {

@@ -11,8 +11,8 @@ export default class UserRepository implements GenericCallVerbs<UserModel>{
         this.dbStrategy = new DataBaseStrategy(EnumStrategy.MONGO, UserModel.collection);
     }
 
-    async get(): Promise<UserModel> {
-        return this.dbStrategy.get();
+    async get(id: any) {
+        return this.dbStrategy.get(id);
     }
 
     async getAll() {
@@ -20,7 +20,7 @@ export default class UserRepository implements GenericCallVerbs<UserModel>{
     }
 
     async post(body: any) {
-        return this.dbStrategy.post(body);
+        return await this.dbStrategy.post(body);
     }
 
     async put(id: any, body: any) {

@@ -1,7 +1,6 @@
+import { Collection } from "mongodb";
 import { MongoDb } from "../config/mongodb.config";
 import { GenericCallVerbs } from "../interface/generic-call-verbs";
-import { Collection } from "mongodb";
-import { GenericModel } from "../model/generic.model";
 
 export default class MongoDbStrategy<T> implements GenericCallVerbs<T> {
 
@@ -14,22 +13,17 @@ export default class MongoDbStrategy<T> implements GenericCallVerbs<T> {
         this.mongoDb = new MongoDb();
     }
 
-    async get(options?: any): Promise<T> {
-        let userReturn: any;
-        await this.getCollection().find().forEach((user: T) => {userReturn = user;});
-        return userReturn;
+    async get(id: any): Promise<any> {
+        return await this.getCollection().findOne({_id: new MongoDb.ObjectId(id)});
     }
 
     async getAll(options?: any): Promise<T> {
-        // return this.mongoDb.dataBase
-        //             .collection("users")
-        //             .find();
         let teste = new Promise<T>( () => {} );
-        return teste;// await this._collection.find();
+        return teste;
     }
 
     async post(body: any, options: any) {
-        return this.getCollection().insertMany(body, options);
+        return await this.getCollection().insertMany([body], options);
     }
     async put(id: any, body: any) {
         return await this.getCollection().update({_id: new MongoDb.ObjectId(id)}, { $set: body }, {w:1});
@@ -40,8 +34,7 @@ export default class MongoDbStrategy<T> implements GenericCallVerbs<T> {
     }
 
     private getCollection(): Collection{
-       return this.mongoDb.dataBase
-                    .collection(this.collection);
+       return this.mongoDb.dataBase.collection(this.collection);
     }
 
 }

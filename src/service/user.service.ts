@@ -10,8 +10,8 @@ export default class UserService implements GenericCallVerbs<GenericModel> {
         this.userRepository =  new UserRepository();
     }
 
-    async get(): Promise<GenericModel> {
-        return await this.userRepository.get();
+   async get(id: any) {
+        return await this.userRepository.get(id);
     }
 
     async getAll() {

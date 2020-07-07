@@ -1,8 +1,7 @@
 import * as bodyParser from 'body-parser';
 import express from 'express';
 import logger from 'morgan';
-import UserController from "./controller/UserController";
-import { MongoDb } from './config/mongodb.config';
+import UserController from './controller/user.controller';
 
 // Creates and configures an ExpressJS web server.
 class App {
