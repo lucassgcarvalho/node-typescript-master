@@ -25,9 +25,7 @@ class App {
     this.express.use(bodyParser.urlencoded({ extended: false }));
   }
 
-  configDB() {
-   
-  }
+  configDB() {}
 
   // Configure API endpoints.
   private routes(): void {

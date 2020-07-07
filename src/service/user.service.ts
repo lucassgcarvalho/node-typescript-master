@@ -1,8 +1,8 @@
-import UserRepository from '../repository/user.repository';
-import { GenericHttpCallVerbs } from '../interface/generic-http-call-verbs';
 import { GenericModel } from '../model/generic.model';
+import UserRepository from '../repository/user.repository';
+import { GenericCallVerbs } from '../interface/generic-call-verbs';
 
-export default class UserService implements GenericHttpCallVerbs<GenericModel> {
+export default class UserService implements GenericCallVerbs<GenericModel> {
 
     private userRepository: UserRepository;
     
@@ -14,19 +14,19 @@ export default class UserService implements GenericHttpCallVerbs<GenericModel> {
         return await this.userRepository.get();
     }
 
-    getAll(): GenericModel[] {
+    async getAll() {
         throw new Error("Method not implemented.");
     }
 
-    post(): void | GenericModel {
-        throw new Error("Method not implemented.");
+   async post(body: any) {
+        return await this.userRepository.post(body);
     }
 
-    put(): void | GenericModel {
-        throw new Error("Method not implemented.");
+    async put(id: any, body: any) {
+        return await this.userRepository.put(id, body);
     }
     
-    delete(): void | GenericModel {
-        throw new Error("Method not implemented.");
+    async delete(id: any) {
+        return await this.userRepository.delete(id);
     }
 }

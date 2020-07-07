@@ -1,12 +1,16 @@
 import { GenericModel } from "./generic.model";
 
-export class UserModel implements GenericModel {
-    id!: number;
+export class UserModel extends GenericModel {
+    static collection = "users";
+
     name!: string;
     email!: string;
     password!: string;
 
-    constructor() { }
+    constructor(dbModel?: string) { 
+        super();
+        this.setModel(dbModel? dbModel: UserModel.collection); 
+    }
 
     build(id: number, name: string, email: string, password: string): UserModel{
         this.id = id;
@@ -24,10 +28,8 @@ export class UserModel implements GenericModel {
         return this;
     }
 
-
     buildWithoutId(name: string, email: string, password: string): UserModel{
          this.build(0, name, email, password); delete this.id;
          return this;
     }
-
 }

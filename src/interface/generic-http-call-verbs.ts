@@ -1,13 +1,10 @@
-import { NextFunction, Response, Request } from "express";
+import { NextFunction, Request, Response } from "express";
+import { GenericCallVerbs } from "./generic-call-verbs";
 
-export interface GenericHttpCallVerbs<T> {
+export interface GenericHttpCallVerbs<T> extends GenericCallVerbs<T> {
     get(req?: Request, res?: Response, next?: NextFunction): T | void | T | Promise<T>;    
-    
-    getAll(): Array<T> | void;
-
-    post(): T | void;
-
-    put(): T | void;
-
-    delete(): T | void;
+    getAll(req?: Request, res?: Response, next?: NextFunction): Array<T> | void;
+    post(req?: Request, res?: Response, next?: NextFunction): T | void;
+    put(req?: Request, res?: Response, next?: NextFunction): T | void;
+    delete(req?: Request, res?: Response, next?: NextFunction): T | void;
 }

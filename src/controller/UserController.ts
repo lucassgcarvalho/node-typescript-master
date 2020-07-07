@@ -19,17 +19,20 @@ export default class UserController implements GenericHttpCallVerbs<GenericModel
         this.userService.get().then( (user) => res.send(user));
     }
 
-    getAll(): void{
+    getAll(req: Request, res: Response, next: NextFunction): void{
         throw new Error("Method not implemented.");
     }
-    post(): void{
-        throw new Error("Method not implemented.");
+
+    post(req: Request, res: Response, next: NextFunction): void{
+       res.send(this.userService.post(req.body));
     }
-    put(): void{
-        throw new Error("Method not implemented.");
+
+    put(req: Request, res: Response, next: NextFunction): void{
+        res.send(this.userService.put(req.query['id'], req.body));
     }
-    delete(): void{
-        throw new Error("Method not implemented.");
+
+    delete(req: Request, res: Response, next: NextFunction): void{
+        res.send(this.userService.delete(req.query['id']));
     }
 
     init() {

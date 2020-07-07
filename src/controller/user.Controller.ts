@@ -15,25 +15,27 @@ export default class UserController implements GenericHttpCallVerbs<GenericModel
         this.ROUTER = Router();
         express.use(this.ROOT, this.ROUTER);
     }
-    
-    getAll(): void | GenericModel[] {
-        throw new Error("Method not implemented.");
-    }
-    post(): void | GenericModel {
-        throw new Error("Method not implemented.");
-    }
-    put(): void | GenericModel {
-        throw new Error("Method not implemented.");
-    }
-    delete(): void | GenericModel {
-        throw new Error("Method not implemented.");
-    }
 
-    public get(req: Request, res: Response, next: NextFunction) {
+    get(req: Request, res: Response, next: NextFunction) {
         res.send(this.userService.get());
     }
 
+    getAll(req: Request, res: Response, next: NextFunction) {
+        res.send(this.userService.get());
+    }
 
+    post(req: Request, res: Response, next: NextFunction) {
+        res.send(this.userService.get());
+    }
+
+    put(req: Request, res: Response, next: NextFunction) {
+        res.send(this.userService.get());
+    }
+
+    delete(req: Request, res: Response, next: NextFunction) {
+        res.send(this.userService.get());
+    }
+    
     init() {
         this.ROUTER.get('/', this.get.bind(this));
         this.ROUTER.post('/', this.post.bind(this));

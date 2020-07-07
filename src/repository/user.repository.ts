@@ -1,38 +1,33 @@
+import { GenericCallVerbs } from "../interface/generic-call-verbs";
 import { UserModel } from "../model/user.model";
-import { GenericHttpCallVerbs } from "../interface/generic-http-call-verbs";
-import { MongoDb } from "../config/mongodb.config";
+import DataBaseStrategy from "../strategy/data-base.strategy";
+import { EnumStrategy } from "../strategy/enum.strategy";
 
-export default class UserRepository implements GenericHttpCallVerbs<UserModel>{
+export default class UserRepository implements GenericCallVerbs<UserModel>{
 
-    private mongoDb: MongoDb;
+    private dbStrategy: DataBaseStrategy<UserModel>;
     
     constructor() {
-        this.mongoDb = new MongoDb();
+        this.dbStrategy = new DataBaseStrategy(EnumStrategy.MONGO, UserModel.collection);
     }
 
     async get(): Promise<UserModel> {
-        let userReturn = new UserModel();
-        await this.mongoDb.dataBase
-        .collection("users")
-        .find().forEach((user: UserModel) => {
-            userReturn = user;
-        });
-        return userReturn;
+        return this.dbStrategy.get();
     }
 
-    getAll(): UserModel[] {
+    async getAll() {
         throw new Error("Method not implemented.");
     }
 
-    post(): void | UserModel {
-        throw new Error("Method not implemented.");
+    async post(body: any) {
+        return this.dbStrategy.post(body);
     }
 
-    put(): void | UserModel {
-        throw new Error("Method not implemented.");
+    async put(id: any, body: any) {
+        return this.dbStrategy.put(id, body);
     }
 
-    delete(): void | UserModel {
-        throw new Error("Method not implemented.");
+    async delete(id: any) {
+        return this.dbStrategy.delete(id);
     }
 }
