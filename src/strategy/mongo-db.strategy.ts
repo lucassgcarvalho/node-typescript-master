@@ -6,38 +6,42 @@ export default class MongoDbStrategy<T> implements GenericCallVerbs<T> {
 
     private mongoDb: MongoDb;
     private collection!: string;
-    
+
     constructor(collection: string) {
-        if (!collection)  throw "Collection must be not null or undefined!"; 
+        if (!collection) throw "Collection must be not null or undefined!";
         this.collection = collection;
         this.mongoDb = new MongoDb();
     }
 
     async get(id: any): Promise<any> {
-        return this.getCollection().findOne({_id: new MongoDb.ObjectId(id)});
+        try {
+            return this.getCollection().findOne({ _id: new MongoDb.ObjectId(id) });
+        } catch (error) {
+            return {message: error.message, status: 400};
+        }
     }
 
     async getAll(options?: any) {
-        return await this.getCollection().find().stream().toArray();
+        return this.getCollection().find().stream().toArray();
     }
 
     async post(body: any, options: any) {
         try {
-            return await this.getCollection().insertOne(body, options);
+            return this.getCollection().insertOne(body, options);
         } catch (error) {
             console.log(error)
         }
     }
     async put(id: any, body: any) {
-        return  this.getCollection().update({_id: new MongoDb.ObjectId(id)}, { $set: body }, {w:1});
+        return this.getCollection().update({ _id: new MongoDb.ObjectId(id) }, { $set: body }, { w: 1 });
     }
 
     async delete(id: any, options?: any) {
-        return  this.getCollection().deleteOne( {_id: new MongoDb.ObjectId(id)} );
+        return this.getCollection().deleteOne({ _id: new MongoDb.ObjectId(id) });
     }
 
-    private getCollection(): Collection{
-       return this.mongoDb.dataBase.collection(this.collection);
+    private getCollection(): Collection {
+        return this.mongoDb.dataBase.collection(this.collection);
     }
 
 }

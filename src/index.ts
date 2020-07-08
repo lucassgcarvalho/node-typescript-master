@@ -9,9 +9,7 @@ debug('ts-express:server');
 const WORKERS = process.env.WEB_CONCURRENCY || 1
 const port = normalizePort(process.env.PORT || 3000);
 
-
 //throng({workers: WORKERS, lifetime: Infinity}, start);
-
 
 const requestLogs = [];
 

@@ -18,12 +18,12 @@ export default class DataBaseStrategy<T> implements GenericCallVerbs<T>{
     }
 
     async getAll(options?: any) {
-        return await this.dbStrategy.getAll(options);
+        return  this.dbStrategy.getAll(options);
     }
 
     async post(body?: any, options?: any) {
         try {
-            return await this.dbStrategy.post(body, options);
+            return  this.dbStrategy.post(body, options);
         } catch (error) {
             console.log(error)
         }

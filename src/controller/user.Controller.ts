@@ -20,23 +20,22 @@ export default class UserController implements GenericHttpCallVerbs<GenericModel
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
-        res.send(await this.userService.getAll());
+        this.userService.getAll().then(  (resp) => {res.send(resp)}, (error) => {res.send( error)}  );
     }
 
     async post(req: Request, res: Response, next: NextFunction) {
         try {
             res.send(await this.userService.post(req.body));
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
-
     async put(req: Request, res: Response, next: NextFunction) {
-        res.send(await this.userService.put(req.query['id'], req.body));
+        this.userService.put(req.query['id'], req.body).then(  (resp) => {res.send(resp)}, (error) => {res.send( error)}  );
     }
 
     async delete(req: Request, res: Response, next: NextFunction) {
-        res.send(await this.userService.delete(req.query['id']));
+        this.userService.delete(req.query['id']).then(  (resp) => {res.send(resp)}, (error) => {res.send( error)}  );
     }
 
     init() {

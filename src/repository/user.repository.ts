@@ -6,7 +6,7 @@ import { EnumStrategy } from "../strategy/enum.strategy";
 export default class UserRepository implements GenericCallVerbs<UserModel>{
 
     private dbStrategy: DataBaseStrategy<UserModel>;
-    
+
     constructor() {
         this.dbStrategy = new DataBaseStrategy(EnumStrategy.MONGO, UserModel.collection);
     }
@@ -16,12 +16,12 @@ export default class UserRepository implements GenericCallVerbs<UserModel>{
     }
 
     async getAll() {
-        return await this.dbStrategy.getAll();
+        return this.dbStrategy.getAll();
     }
 
     async post(body: any) {
         try {
-            return await this.dbStrategy.post(body);
+            return this.dbStrategy.post(body);
         } catch (error) {
             console.log(error)
         }
