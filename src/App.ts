@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import express from 'express';
 import logger from 'morgan';
 import UserController from './controller/user.controller';
+import CPUController from './controller/cpu.controller';
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -37,6 +38,7 @@ class App {
 
   private userRouter() {
     new UserController(this.express).init();
+    new CPUController(this.express).init();
   }
 }
 

@@ -27,6 +27,7 @@ const debug_1 = __importDefault(require("debug"));
 const App_1 = __importDefault(require("./App"));
 debug_1.default('ts-express:server');
 const port = normalizePort(process.env.PORT || 3000);
+//App.use(cors());
 App_1.default.set('port', port);
 const server = http.createServer(App_1.default);
 server.listen(port);

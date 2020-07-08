@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bodyParser = __importStar(require("body-parser"));
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
-const UserController_1 = __importDefault(require("./controller/UserController"));
+const user_controller_1 = __importDefault(require("./controller/user.controller"));
 // Creates and configures an ExpressJS web server.
 class App {
     //Run configuration methods on the Express instance.
@@ -41,8 +41,7 @@ class App {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
     }
-    configDB() {
-    }
+    configDB() { }
     // Configure API endpoints.
     routes() {
         this.initRoutes();
@@ -51,7 +50,7 @@ class App {
         this.userRouter();
     }
     userRouter() {
-        new UserController_1.default(this.express).init();
+        new user_controller_1.default(this.express).init();
     }
 }
 exports.default = new App().express;

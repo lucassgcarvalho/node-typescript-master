@@ -1,15 +1,22 @@
 import * as http from 'http';
-import cors from 'cors'
+//import cors from 'cors'
 import debug from 'debug';
-
+import throng from 'throng';
 import App from './App';
 
 debug('ts-express:server');
 
+const WORKERS = process.env.WEB_CONCURRENCY || 1
 const port = normalizePort(process.env.PORT || 3000);
-App.use(cors());
-App.set('port', port);
 
+
+//throng({workers: WORKERS, lifetime: Infinity}, start);
+
+
+const requestLogs = [];
+
+//App.use(cors());
+App.set('port', port);
 const server = http.createServer(App);
 server.listen(port);
 server.on('error', onError);

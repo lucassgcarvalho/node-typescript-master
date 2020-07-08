@@ -10,7 +10,8 @@ export class MongoDb {
      * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
      * mongodb+srv://matrix:neoisalive@<your-cluster-url>/test?retryWrites=true&w=majority
      */
-    uri: string = "mongodb+srv://matrix:neoisalive@cluster0.k58hy.mongodb.net/matrix?retryWrites=true&w=majority";
+    //uri: string = "mongodb+srv://matrix:neoisalive@cluster0.k58hy.mongodb.net/matrix?retryWrites=true&w=majority";
+    uri: string = "mongodb://localhost:27017/matrix";
     dataBase!: mongodb.Db;
     client!: mongodb.MongoClient;
     static ObjectId = mongodb.ObjectId;

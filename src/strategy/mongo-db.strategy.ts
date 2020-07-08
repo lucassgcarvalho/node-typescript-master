@@ -14,23 +14,26 @@ export default class MongoDbStrategy<T> implements GenericCallVerbs<T> {
     }
 
     async get(id: any): Promise<any> {
-        return await this.getCollection().findOne({_id: new MongoDb.ObjectId(id)});
+        return this.getCollection().findOne({_id: new MongoDb.ObjectId(id)});
     }
 
-    async getAll(options?: any): Promise<T> {
-        let teste = new Promise<T>( () => {} );
-        return teste;
+    async getAll(options?: any) {
+        return await this.getCollection().find().stream().toArray();
     }
 
     async post(body: any, options: any) {
-        return await this.getCollection().insertMany([body], options);
+        try {
+            return await this.getCollection().insertOne(body, options);
+        } catch (error) {
+            console.log(error)
+        }
     }
     async put(id: any, body: any) {
-        return await this.getCollection().update({_id: new MongoDb.ObjectId(id)}, { $set: body }, {w:1});
+        return  this.getCollection().update({_id: new MongoDb.ObjectId(id)}, { $set: body }, {w:1});
     }
 
     async delete(id: any, options?: any) {
-        return await this.getCollection().deleteOne( {_id: new MongoDb.ObjectId(id)} );
+        return  this.getCollection().deleteOne( {_id: new MongoDb.ObjectId(id)} );
     }
 
     private getCollection(): Collection{

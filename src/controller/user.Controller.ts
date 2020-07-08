@@ -20,11 +20,15 @@ export default class UserController implements GenericHttpCallVerbs<GenericModel
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
-        throw new Error("Method not implemented.");
+        res.send(await this.userService.getAll());
     }
 
     async post(req: Request, res: Response, next: NextFunction) {
-       res.send(await this.userService.post(req.body));
+        try {
+            res.send(await this.userService.post(req.body));
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async put(req: Request, res: Response, next: NextFunction) {
@@ -37,7 +41,8 @@ export default class UserController implements GenericHttpCallVerbs<GenericModel
 
     init() {
         this.router.get('/', this.get.bind(this));
-        this.router.post('/', this.post.bind(this));
+        this.router.get('/all', this.getAll.bind(this));
+        this.router.post('/',   this.post.bind(this) );
         this.router.put('/', this.put.bind(this));
         this.router.delete('/', this.delete.bind(this));
     }

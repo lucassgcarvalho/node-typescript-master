@@ -8,35 +8,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = require("../model/user.model");
-const mongodb_config_1 = require("../config/mongodb.config");
+const data_base_strategy_1 = __importDefault(require("../strategy/data-base.strategy"));
+const enum_strategy_1 = require("../strategy/enum.strategy");
 class UserRepository {
     constructor() {
-        this.mongoDb = new mongodb_config_1.MongoDb();
+        this.dbStrategy = new data_base_strategy_1.default(enum_strategy_1.EnumStrategy.MONGO, user_model_1.UserModel.collection);
     }
-    get() {
+    get(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            let userReturn = new user_model_1.UserModel();
-            yield this.mongoDb.dataBase
-                .collection("users")
-                .find().forEach((user) => {
-                userReturn = user;
-            });
-            return userReturn;
+            return this.dbStrategy.get(id);
         });
     }
     getAll() {
-        throw new Error("Method not implemented.");
+        return __awaiter(this, void 0, void 0, function* () {
+            throw new Error("Method not implemented.");
+        });
     }
-    post() {
-        throw new Error("Method not implemented.");
+    post(body) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield this.dbStrategy.post(body);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
     }
-    put() {
-        throw new Error("Method not implemented.");
+    put(id, body) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.dbStrategy.put(id, body);
+        });
     }
-    delete() {
-        throw new Error("Method not implemented.");
+    delete(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.dbStrategy.delete(id);
+        });
     }
 }
 exports.default = UserRepository;

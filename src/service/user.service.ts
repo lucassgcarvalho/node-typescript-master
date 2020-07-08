@@ -15,11 +15,15 @@ export default class UserService implements GenericCallVerbs<GenericModel> {
     }
 
     async getAll() {
-        throw new Error("Method not implemented.");
+        return await this.userRepository.getAll();
     }
 
-   async post(body: any) {
-        return await this.userRepository.post(body);
+    async post(body: any) {
+        try {
+            return await this.userRepository.post(body).then( (user) => user, (error) => {throw error});
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async put(id: any, body: any) {

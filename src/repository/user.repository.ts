@@ -16,11 +16,15 @@ export default class UserRepository implements GenericCallVerbs<UserModel>{
     }
 
     async getAll() {
-        throw new Error("Method not implemented.");
+        return await this.dbStrategy.getAll();
     }
 
     async post(body: any) {
-        return await this.dbStrategy.post(body);
+        try {
+            return await this.dbStrategy.post(body);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async put(id: any, body: any) {

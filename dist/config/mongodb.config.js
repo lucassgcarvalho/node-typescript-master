@@ -22,8 +22,12 @@ class MongoDb {
          * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
          * mongodb+srv://matrix:neoisalive@<your-cluster-url>/test?retryWrites=true&w=majority
          */
-        this.uri = "mongodb+srv://matrix:neoisalive@cluster0.k58hy.mongodb.net/matrix?retryWrites=true&w=majority";
-        this.conf(uriParam);
+        //uri: string = "mongodb+srv://matrix:neoisalive@cluster0.k58hy.mongodb.net/matrix?retryWrites=true&w=majority";
+        this.uri = "mongodb://localhost:27017/matrix";
+        this.conf(uriParam).then((db) => { this.dataBase = db; }, (err) => { throw err; });
+    }
+    getDataBase() {
+        return this.dataBase;
     }
     listDatabases(client) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -38,7 +42,7 @@ class MongoDb {
             try {
                 this.client = yield MongoClient.connect((uriParam ? uriParam : this.uri), { useNewUrlParser: true, useUnifiedTopology: true });
                 this.listDatabases(this.client);
-                this.dataBase = this.client.db();
+                return this.dataBase = this.client.db();
             }
             catch (error) {
                 console.log(error);
@@ -48,4 +52,5 @@ class MongoDb {
     }
 }
 exports.MongoDb = MongoDb;
+MongoDb.ObjectId = mongodb_1.default.ObjectId;
 //# sourceMappingURL=mongodb.config.js.map
