@@ -13,35 +13,37 @@ export default class MongoDbStrategy<T> implements GenericCallVerbs<T> {
         this.mongoDb = new MongoDb();
     }
 
-    async get(id: any): Promise<any> {
-        try {
-            return this.getCollection().findOne({ _id: new MongoDb.ObjectId(id) });
-        } catch (error) {
-            return {message: error.message, status: 400};
-        }
+    async get(id: any) {
+        return this.getCollection()
+            .then( (collection: Collection) => {collection.findOne({ _id: new MongoDb.ObjectId(id) }) } )
+            .catch( (error) => {throw error} ) ;
     }
 
     async getAll(options?: any) {
-        return this.getCollection().find().stream().toArray();
+        return this.getCollection()
+            .then( (collection: Collection) => {collection.find().stream().toArray() } )
+            .catch( (error) => {throw error} ) ;
     }
 
     async post(body: any, options: any) {
-        try {
-            return this.getCollection().insertOne(body, options);
-        } catch (error) {
-            console.log(error)
-        }
+        return this.getCollection()
+            .then( (collection: Collection) => {collection.insertOne(body, options) } )
+            .catch( (error) => {throw error} ) ;
     }
+
     async put(id: any, body: any) {
-        return this.getCollection().update({ _id: new MongoDb.ObjectId(id) }, { $set: body }, { w: 1 });
+        return this.getCollection()
+            .then( (collection: Collection) => {collection.update({ _id: new MongoDb.ObjectId(id) }, { $set: body }, { w: 1 }) } )
+            .catch( (error) => {throw error} ) ; 
     }
 
     async delete(id: any, options?: any) {
-        return this.getCollection().deleteOne({ _id: new MongoDb.ObjectId(id) });
+        return this.getCollection()
+            .then( (collection: Collection) => {collection.deleteOne({ _id: new MongoDb.ObjectId(id) })} )
+            .catch( (error) => {throw error} ) ; 
     }
 
-    private getCollection(): Collection {
-        return this.mongoDb.dataBase.collection(this.collection);
+    async getCollection(): Promise<Collection> {
+         return this.mongoDb.dataBase.collection(this.collection);
     }
-
 }

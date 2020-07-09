@@ -22,11 +22,7 @@ export default class DataBaseStrategy<T> implements GenericCallVerbs<T>{
     }
 
     async post(body?: any, options?: any) {
-        try {
-            return  this.dbStrategy.post(body, options);
-        } catch (error) {
-            console.log(error)
-        }
+        return  this.dbStrategy.post(body, options);
     }
 
     async put(params: any, options?: any) {

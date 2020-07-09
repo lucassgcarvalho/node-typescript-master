@@ -19,11 +19,7 @@ export default class UserService implements GenericCallVerbs<GenericModel> {
     }
 
     async post(body: any) {
-        try {
-            return this.userRepository.post(body).then((user) => user, (error) => { throw error });
-        } catch (error) {
-            console.log(error)
-        }
+        return this.userRepository.post(body);//.then((user) => user, (error) => { throw error });
     }
 
     async put(id: any, body: any) {

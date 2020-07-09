@@ -20,11 +20,7 @@ export default class UserRepository implements GenericCallVerbs<UserModel>{
     }
 
     async post(body: any) {
-        try {
-            return this.dbStrategy.post(body);
-        } catch (error) {
-            console.log(error)
-        }
+        return this.dbStrategy.post(body);
     }
 
     async put(id: any, body: any) {
