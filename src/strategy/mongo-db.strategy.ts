@@ -15,31 +15,34 @@ export default class MongoDbStrategy<T> implements GenericCallVerbs<T> {
 
     async get(id: any) {
         return this.getCollection()
-            .then( (collection: Collection) => {collection.findOne({ _id: new MongoDb.ObjectId(id) }) } )
+            .then( async (collection: Collection)  => {return collection.findOne({ _id: new MongoDb.ObjectId(id) }) } )
             .catch( (error) => {throw error} ) ;
+            // return this.getCollection()
+            // .then( (collection: Collection) => {collection.findOne({ _id: new MongoDb.ObjectId(id) }) } )
+            // .catch( (error) => {throw error} ) ;
     }
 
     async getAll(options?: any) {
         return this.getCollection()
-            .then( (collection: Collection) => {collection.find().stream().toArray() } )
+            .then( async (collection: Collection) => {return collection.find().stream().toArray() } )
             .catch( (error) => {throw error} ) ;
     }
 
     async post(body: any, options: any) {
         return this.getCollection()
-            .then( (collection: Collection) => {collection.insertOne(body, options) } )
+            .then( async (collection: Collection) => {return collection.insertOne(body, options) } )
             .catch( (error) => {throw error} ) ;
     }
 
     async put(id: any, body: any) {
         return this.getCollection()
-            .then( (collection: Collection) => {collection.update({ _id: new MongoDb.ObjectId(id) }, { $set: body }, { w: 1 }) } )
+            .then( async (collection: Collection) => {return collection.update({ _id: new MongoDb.ObjectId(id) }, { $set: body }, { w: 1 }) } )
             .catch( (error) => {throw error} ) ; 
     }
 
     async delete(id: any, options?: any) {
         return this.getCollection()
-            .then( (collection: Collection) => {collection.deleteOne({ _id: new MongoDb.ObjectId(id) })} )
+            .then( async (collection: Collection) => {return collection.deleteOne({ _id: new MongoDb.ObjectId(id) })} )
             .catch( (error) => {throw error} ) ; 
     }
 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --trace-sync-io --max_old_space_size=10192 --transpileOnly --ignore-watch node_modules ./src/index.ts",
+    "start": "ts-node-dev --max_old_space_size=10192 --transpileOnly --ignore-watch node_modules ./src/index.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
